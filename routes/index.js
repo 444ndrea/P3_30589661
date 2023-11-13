@@ -4,30 +4,29 @@ const db = require('../db/models');
 require('dotenv').config()
 
 
-//login
-let logged = false;
-
 router.get('/', (req, res) => {
   res.render('view')
 } )
+
+router.get('/nosotros', (req, res) => {
+  res.render('nosotros')
+} )
+
 router.get('/login', (req, res) => {
   res.render('login')
 } )
 
-router.post('/login', function(req,res,next) {
+
+router.post('/login', (req,res) =>{
   let user = req.body.user
   let pass = req.body.pass
-  console.log(req.body)
   if (user == process.env.username && pass == process.env.clave) {
-    console.log("Iniciaste")
-    logged = true
-    res.render ('/administrar')
-  
+    res.render('administrar')
   } else {
-    logged = false
-    res.render('/login', {error: 'Datos incorrectos'});
+   res.render('login', { error: 'Datos incorrectos' });
   }
 })
+
 
 //index
 router.get('/index', (req, res) => {
@@ -253,3 +252,7 @@ router.get('/deleteima/:id', (req, res)=>{
   });
 })
 
+
+
+
+module.exports = router;
