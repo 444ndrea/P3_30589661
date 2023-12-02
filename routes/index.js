@@ -5,14 +5,6 @@ require('dotenv').config()
 
 
 router.get('/', (req, res) => {
-  res.render('view')
-} )
-
-router.get('/nosotros', (req, res) => {
-  res.render('nosotros')
-} )
-
-router.get('/login', (req, res) => {
   res.render('login')
 } )
 
@@ -85,9 +77,9 @@ router.get('/insert', (req, res) => {
 
 
 router.post('/insert', (req, res) => {
-  const {code, name, brand, model, description, price, category_id} = req.body;
-  console.log(code, name, brand, model, description, price, category_id);
-  db.insertproducto(code, name,brand,model,description,price,category_id)
+  const {code, name, description, price} = req.body;
+  console.log(code, name, description, price);
+  db.insertproducto(code, name,description,price)
   .then(() => {
      res.redirect('index')
   })
@@ -124,8 +116,9 @@ router.post('/insertima', (req, res) => {
 
 //editar producto
 router.post('/edit/', (req, res)=>{
-  const {id, code, name, brand, model, description, price, category_id,} = req.body;
-  db.updateproducto(id, code, name, brand, model, description, price, category_id)
+  const {id, code, name, brand, model, description, price} = req.body;
+  db.updateproducto(id, code, name, brand, model, description, price
+    )
   .then(() =>{
     res.redirect('/index');
   })

@@ -1,7 +1,4 @@
-extends layout
-
-block content
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -52,8 +49,7 @@ block content
             <td><%= product.brand %></td>
             <td><%= product.description %></td>
             <td><%= product.price %></td>
-
-            <% } %>
+        
             <td><a href="/edit/<%=product.id%>" class="btn btn-dark">Editar</a>
               <a href="/delete/<%=product.id%>" class="btn btn-dark">Eliminar</a>
             </td>

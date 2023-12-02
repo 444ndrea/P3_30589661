@@ -3,24 +3,66 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../stylesheets/login.css">
-  <title>Login</title>
+  <title>Login</title> 
+  <style>
+body{
+	background-image:url(https://www.cerave.es/-/media/Project/Loreal/BrandSites/CeraVe/Master/Spain/Product/category_all-productsv13.png);
+	background-size:cover;
+	background-attachment: fixed;
+}
+#login{
+	display:flex;
+	flex-direction:column;
+	justify-content: center;
+	align-items:center;
+	background:rgba(147, 164, 255, 0.7);
+	width:90%;
+	max-width: 400px;
+	height:auto;
+	margin:50px auto;
+	border-radius:10px 10px 10px 10px;
+	padding: 20px;
+}
+label{
+    text-align: center;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 30px;
+	color:rgba(1, 0, 2, 0.87);
+}
+h1{
+	text-align:center;
+	font-family: Arial, Helvetica, sans-serif;
+    color: rgb(0, 0, 0);
+}
+form{
+	display:flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+input{
+padding:8px;
+border-radius:10px 10px 10px 10px;
+}
+#iniciar{
+	margin-top:10px;
+	padding: 7px;
+	border-radius:10px 10px 10px 10px;
+}
+  </style>
 </head>
 <body>
-  
-  <div class="background">
-      <div class="shape"></div>
-      <div class="shape"></div>
-  </div>
-
-  <form action="/login" method="post">
-    <h3>Inicio</h3>
-    <label for="username">Nombre de Usuario</label>
+  <table>
+    <h1 class="login">Inicio de Sesión de Administrador</h1>
+    <div id="login">
+    <form action="/login" method="post">
+    <label for="username">Usuario</label>
     <input type="text" placeholder="Usuario" name="user" value="" required>
     <label for="password" required>Contraseña</label>
     <input type="password" placeholder="Contraseña" name="pass" value="" required>
     <button type="submit" value="Login" required>Iniciar Sesión</button>
   </form>
-
+  </div>
+</table>
 </body>
 </html>
