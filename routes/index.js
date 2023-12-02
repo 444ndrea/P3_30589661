@@ -3,22 +3,20 @@ var router = express.Router();
 const db = require('../db/models');
 require('dotenv').config()
 
+//login
+router.get('/',(req, res)=>{
+  res.render ('login')
+})
 
-router.get('/', (req, res) => {
-  res.render('login')
-} )
-
-
-router.post('/login', (req,res) =>{
+router.post('/login', (req, res) =>{
   let user = req.body.user
   let pass = req.body.pass
-  if (user == process.env.username && pass == process.env.clave) {
-    res.render('administrar')
+  if (user == process.env.usuario && pass == process.env.contrasena) {
+    res.render('administar')
   } else {
    res.render('login', { error: 'Datos incorrectos' });
   }
 })
-
 
 //index
 router.get('/index', (req, res) => {
@@ -77,9 +75,9 @@ router.get('/insert', (req, res) => {
 
 
 router.post('/insert', (req, res) => {
-  const {code, name, description, price} = req.body;
-  console.log(code, name, description, price);
-  db.insertproducto(code, name,description,price)
+  const {code, name, brand, model, description, price, category_id} = req.body;
+  console.log(code, name, brand, model, description, price, category_id);
+  db.insertproducto(code, name,brand,model,description,price,category_id)
   .then(() => {
      res.redirect('index')
   })
@@ -116,9 +114,8 @@ router.post('/insertima', (req, res) => {
 
 //editar producto
 router.post('/edit/', (req, res)=>{
-  const {id, code, name, brand, model, description, price} = req.body;
-  db.updateproducto(id, code, name, brand, model, description, price
-    )
+  const {id, code, name, lab, quantity, description, price, category_id,} = req.body;
+  db.updateproducto(id, code, name, lab, quantity, description, price, category_id)
   .then(() =>{
     res.redirect('/index');
   })
@@ -215,11 +212,11 @@ router.get('/delete/:id', (req, res)=>{
   });
 })
 
-router.get('/administrar', (req, res) =>{
-  res.render('administrar')
+router.get('/administar', (req, res) =>{
+  res.render('administar')
 })
 
-router.get('/tabcategory', (req, res) =>{
+router.get('/categorias', (req, res) =>{
   res.render('tabcategory')
 })
 
