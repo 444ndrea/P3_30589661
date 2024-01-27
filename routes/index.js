@@ -11,7 +11,7 @@ router.get('/',(req, res)=>{
 router.post('/login', (req, res) =>{
   let user = req.body.user
   let pass = req.body.pass
-  if (user == process.env.usuario && pass == process.env.contrasena) {
+  if (user == process.env.username && pass == process.env.clave) {
     res.render('administar')
   } else {
    res.render('login', { error: 'Datos incorrectos' });
