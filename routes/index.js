@@ -19,14 +19,14 @@ router.post('/login', (req, res) =>{
 })
 
 //index
-router.get('/index', (req, res) => {
+router.get('/index.ejs', (req, res) => {
   db.getproducto()
     .then(data => {        
       console.log(data)
-      res.render('index', { producto: data });
+      res.render('index.ejs', { producto: data });
   })
   .catch(err => {
-      res.render('index', { producto: [] });
+      res.render('index.ejs', { producto: [] });
   })
 
   
@@ -79,7 +79,7 @@ router.post('/insert', (req, res) => {
   console.log(code, name, brand, model, description, price, category_id);
   db.insertproducto(code, name,brand,model,description,price,category_id)
   .then(() => {
-     res.redirect('index')
+     res.redirect('index.ejs')
   })
   .catch(err => {
     console.log(err);
@@ -117,7 +117,7 @@ router.post('/edit/', (req, res)=>{
   const {id, code, name, lab, quantity, description, price, category_id,} = req.body;
   db.updateproducto(id, code, name, lab, quantity, description, price, category_id)
   .then(() =>{
-    res.redirect('/index');
+    res.redirect('/index.ejs');
   })
   .catch(err =>{
     console.log(err);
@@ -205,7 +205,7 @@ router.get('/delete/:id', (req, res)=>{
   const id = req.params.id;
   db.deleteproducto(id)
     .then(() => {
-    res.redirect('/index');
+    res.redirect('/index.ejs');
   })
   .catch(err => {
   console.log(err);
