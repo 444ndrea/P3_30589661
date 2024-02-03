@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <style>
+       
+  body{
+    background-image:url(https://www.cerave.hk/en-hk/-/media/Project/Loreal/BrandSites/CeraVe/shared/Cerave_Banner_1.png?h=350&la=en-HK&w=675&hash=0E9B05A5F54AA46A99EE1A4930A5746328A7FE2C);
+    background-size:cover;
+    background-attachment: fixed;
+  }
+  #login{
+    display:flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items:center;
+    background:rgba(235, 33, 134, 0.507);
+    width:60%;
+    height:70vh;
+    margin:50px auto;
+    border-radius:10px 10px 10px 10px;
+  }
+  label{
+      text-align: center;
+    font-family: 'Poppins', sans-serif;
+    font-size: 30px;
+    color:rgba(1, 0, 2, 0.87);
+  }
+  h1{
+    text-align:center;
+    font-family: 'Poppins', sans-serif;
+    color: rgb(0, 0, 0);
+  }
+  form{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  input{
+  padding:10px;
+  border-radius: 16px;
+  font-family: 'Poppins', sans-serif;
+  }
+  #iniciar{
+    margin-top:10px;
+    padding: 70px;
+    border-radius:10px 10px 10px 10px;
+    font-family: 'Poppins', sans-serif;
+  }
+  button { 
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    margin: 5;
+      padding: 8px 15px;
+      border-radius: 16px; 
+    background: #f52776
+  }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="menu logo-nav">
+      <a href="/views" class="logo">Skinfoodie</a>
+      <label class="menu-icon"><span class="fas fa-bars icomin"></span></label>
+      <nav class="navigation">
+        <ul>
+          <li><a href="/login">Administrar</a></li>
+          <li><a href="/nosotros">Nosotros</a></li>
+          <li><a href="/destacados">Productos</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  
+  <div class="container-contacto">
+   
+
+  <form action="/login" id="form" method="post">
+    <h2>Iniciar sesion</h2>
+    <br>
+    <label for="username">Correo electronico</label>
+  
+    <input type="text" placeholder="Email" name="user" value="" required>
+
+    <label for="password" required>Contraseña</label>
+    <input type="password" placeholder="Contraseña" name="pass" value="" required>
+    
+    <input type="submit" id="button-contacto" value="ENVIAR" class="button">
+    
+        
+   
+  </form>
+
+ 
+
+  </div>
+ 
+
+    <footer class="footer-section">
+      <div class="copyright-area">
+          <div class="container-footer">
+              <div class="row-footer">
+                  <div class="col-xl-6 col-lg-6 text-center text-lg-left">
+                      <div class="copyright-text">
+                          <p>Copyright &copy; 2020, todos los derechos reservados <a href="/views">Skinfoodie</a></p>
+                      </div>
+                  </div>
+                  <div class="col-xl-6 col-lg-6 d-none d-lg-block text-right">
+                      <div class="footer-menu">
+                          <ul>
+                            <li><a href="/login">Administrar</a></li>
+                            <li><a href="/nosotros">Nosotros</a></li>
+                            <li><a href="/sesion"> Iniciar sesion</a></li>
+                            <li><a href="/client">Registrarse</a></li>
+                          </ul>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </footer>  
+</body>
+</html>

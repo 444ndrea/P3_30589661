@@ -1,24 +1,71 @@
+
 const db = require('./connection');
 
 let querys = {
     getproducto: 'SELECT * FROM producto',
     getproductoID: 'SELECT * FROM producto WHERE id = ?',
+    getproductoNO: 'SELECT * FROM producto ORDER BY name ASC',
+    getproductoDE: 'SELECT * FROM producto ORDER BY description ASC',
+    getproductoCA: 'SELECT * FROM producto ORDER BY category_id ASC',
+    getproductoMO: 'SELECT * FROM producto ORDER BY model ASC',
+    getproductoPO: 'SELECT * FROM producto ORDER BY power ASC',
     getimagenID: 'SELECT * FROM imagen WHERE id = ?',
-    insertproducto: 'INSERT INTO producto (code, name, lab, quantity, description, price, category_id) VALUES(?, ?, ?, ?, ?, ?, ?)',
+    insertproducto: 'INSERT INTO producto (code, name, power, model, description, price, category_id) VALUES(?, ?, ?, ?, ?, ?, ?)',
     getimagen: 'SELECT * FROM imagen',
     getcategory: 'SELECT * FROM category',
     getcategoryID: 'SELECT * FROM category WHERE id = ?',
     insertimagen: 'INSERT INTO imagen (url, producto_id, destacado) VALUES(?, ?, ?)',
     insertcategory: 'INSERT INTO category(name) VALUES(?)',
-    updateproducto: 'UPDATE producto SET code = ?, name = ?, lab = ?, quantity = ?, description = ?, price = ?, category_id = ? WHERE id = ?',
+    updateproducto: 'UPDATE producto SET code = ?, name = ?, power = ?, model = ?, description = ?, price = ?, category_id = ? WHERE id = ?',
     updateimagen: 'UPDATE imagen SET url = ?, producto_id = ?, destacado = ? WHERE id = ?',
     updatecategory: 'UPDATE category SET name = ? WHERE id = ?',
     deleteproducto: 'DELETE FROM producto WHERE id = ?',
     deleteimagen: 'DELETE FROM imagen WHERE id = ?',
-    deletecategory: 'DELETE FROM category WHERE id = ?'
-
+    deletecategory: 'DELETE FROM category WHERE id = ?',
+    insertclient: 'INSERT INTO client (email, pass) VALUES(?, ?)',
+    getclient: 'SELECT * FROM client',
+    getcompra: 'SELECT * FROM compra',
+    insertcompra: 'INSERT INTO compra (cliente_id, producto_id, cantidad, total_pagado, fecha, ip_cliente) VALUES(?, ?, ?, ?, ?, ?)'
 }
 module.exports = {
+    insertcompra(cliente_id, producto_id, cantidad, total_pagado, fecha, ip_cliente){
+        return new Promise((resolve, reject) => {
+            db.run(querys.insertcompra, [cliente_id, producto_id, cantidad, total_pagado, fecha, ip_cliente], (err) => {
+                if(err) reject(err);
+                    resolve()
+            })
+        })
+    
+    },
+
+    insertclient(email, pass){
+        return new Promise((resolve, reject) => {
+            db.run(querys.insertclient, [email, pass], (err) => {
+                if(err) reject(err);
+                    resolve()
+            })
+        })
+    
+    },
+
+    getclient(){
+        return new Promise((resolve, reject)=>{
+            db.all(querys.getclient, (err,rows)=>{
+                if(err) reject(err);
+                resolve(rows);
+            })
+        })
+    },
+
+    getcompra(){
+        return new Promise((resolve, reject)=>{
+            db.all(querys.getcompra, (err,rows)=>{
+                if(err) reject(err);
+                resolve(rows);
+            })
+        })
+    },
+
     getproducto(){
         return new Promise((resolve, reject)=>{
             db.all(querys.getproducto, (err,rows)=>{
@@ -26,13 +73,56 @@ module.exports = {
                 resolve(rows);
             })
         })
-
-    
     },
     
-    insertproducto(code, name, lab, quantity, description, price, category_id){
+    getproductoNO(){
+        return new Promise((resolve, reject)=>{
+            db.all(querys.getproductoNO, (err,rows)=>{
+                if(err) reject(err);
+                resolve(rows);
+            })
+        })
+    },
+
+    getproductoDE(){
+        return new Promise((resolve, reject)=>{
+            db.all(querys.getproductoDE, (err,rows)=>{
+                if(err) reject(err);
+                resolve(rows);
+            })
+        })
+    },
+
+    getproductoCA(){
+        return new Promise((resolve, reject)=>{
+            db.all(querys.getproductoCA, (err,rows)=>{
+                if(err) reject(err);
+                resolve(rows);
+            })
+        })
+    },
+
+    getproductoMO(){
+        return new Promise((resolve, reject)=>{
+            db.all(querys.getproductoMO, (err,rows)=>{
+                if(err) reject(err);
+                resolve(rows);
+            })
+        })
+    },
+
+    getproductoPO(){
+        return new Promise((resolve, reject)=>{
+            db.all(querys.getproductoPO, (err,rows)=>{
+                if(err) reject(err);
+                resolve(rows);
+            })
+        })
+    },
+
+    insertproducto(code, name, power, model, description, price, category_id){
         return new Promise((resolve, reject) => {
-            db.run(querys.insertproducto, [code, name, lab, quantity, description, price, category_id], (err) => {
+            db.run(querys.insertproducto, [code, name, power, model, description, price, category_id], (err) => {
                 if(err) reject(err);
                     resolve()
             })
@@ -49,9 +139,9 @@ module.exports = {
         })
     },
 
-    updateproducto(id, code, name, lab, quantity, description, price, category_id){
+    updateproducto(id, code, name, power, model, description, price, category_id){
         return new Promise((resolve, reject) => {
-            db.run(querys.updateproducto, [code, name, lab, quantity, description, price, category_id, id], (err) => {
+            db.run(querys.updateproducto, [code, name, power, model, description, price, category_id, id], (err) => {
                 if(err) reject(err);
                 resolve();
             })

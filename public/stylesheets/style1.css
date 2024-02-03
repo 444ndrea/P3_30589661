@@ -1,20 +1,16 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Productos</title>
-    <style>
-      @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
-        *{
+*{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
+    font-family: sans-serif;
     letter-spacing: 0.03em;
     line-height: 1.3;
   }
   
+  
+
+   
+
  .contenedor-imagen {   
   display: flex;
   justify-content: center;
@@ -47,13 +43,13 @@
   margin-bottom: 100px;
     border-collapse: collapse; 
     font-size: 1em; 
-    font-family: 'Poppins', sans-serif; 
+    font-family: sans-serif; 
     min-width: 600px; 
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15); 
   }
 
   .content-table thead tr { 
-    background-color: #99c9ff; 
+    background-color: #003a52; 
     color: #ffffff; 
     text-align: middle; 
   }
@@ -69,7 +65,7 @@
     background-color: #f3f3f3; text-align: center;
   } 
   .content-table tbody tr:last-of-type { 
-    border-bottom: 2px solid #980065; 
+    border-bottom: 2px solid #009879; 
   }
 
   p{
@@ -85,7 +81,7 @@
   }
 
   .button{
-    background:#ff57ab;
+    background:#1a38df;
     text-decoration: none;
     padding: 15px;
     margin-top: 15px;
@@ -96,15 +92,15 @@
   .button:hover{
     cursor: pointer;
     text-decoration: none;
-    background-color: #ff57ab;
-    color: #000000;
+    background-color: #1a4a72;
+    color: #f2f2f2;
   }
   
   
   /*menu*/
   header{
-    background:#ff57ab;
-    color:#000000;
+    background:#003a52;
+    color:#f2f2f2;
     padding: 1rem 0;
     position: fixed;
     left: 0;
@@ -113,7 +109,7 @@
     height: 65px;
   }
   header a{
-    color: #050202;
+    color: #cccccc;
     text-decoration: none;
   }
   .menu{
@@ -128,7 +124,7 @@
     flex-wrap: wrap;
   }
   .logo{
-    color: #0c0606;
+    color: #f2f2f2;
     font-size: 30px;
     font-weight: 700;
   }
@@ -149,7 +145,7 @@
     font-weight: 700;
   }
   .navigation ul li a:hover{
-    color: #080606;
+    color: #f2f2f2;
   }
   .navigation ul .search-icon input{
     color: #000;
@@ -194,7 +190,7 @@
     padding: .5rem 0;
     margin: .125rem 0 0;
     font-size: 1rem;
-    color: #e8f4ff;
+    color: #212529;
     text-align: left;
     list-style: none;
     background-color: #fff;
@@ -212,7 +208,7 @@
     display: block;
   }
   .button-vaciar{
-    background:#da0f85;
+    background:#17A2B8;
     text-decoration: none;
     padding: 15px;
     margin-top: 15px;
@@ -223,12 +219,12 @@
   .button-vaciar:hover{
     cursor: pointer;
     text-decoration: none;
-    background-color: #c4e5eb;
+    background-color: #0c505a;
     color: #f2f2f2;
   }
   .button-pedido{
-    background:rgb(197, 172, 255) ;
-    text-decoration: none ;
+    background:#28A745;
+    text-decoration: none;
     padding: 15px;
     margin-top: 15px;
     border-radius: 5px;
@@ -238,7 +234,7 @@
   .button-pedido:hover{
     cursor: pointer;
     text-decoration: none;
-    background-color: #9b277e;
+    background-color: #1e612e;
     color: #f2f2f2;
   }
   
@@ -302,7 +298,7 @@
   .circulo{    
     width: 60%;
     border-radius: 50%;
-    border:2px solid  #dd0c7f;
+    border:2px solid  #0066ff;
     box-shadow: 0 2px 2px rgba(0,0,0,0.2);
   }
   .ver-todo{
@@ -391,11 +387,11 @@
     width: 50px;
     height: 50px;
     line-height: 50px;
-    background:#242b3b;
+    background:#0a4ddf;
     font-size: 2em;
     text-align: center;
     border-radius: 50%;
-    font-family: 'Poppins', sans-serif;
+    font-family: monospace;
   }
   .modal-open{
     display: block;
@@ -418,7 +414,7 @@
     background: #4E5D6C;
     color:#f2f2f2;
     border-radius: 8px;
-    border:1px solid  #c1d1f5;
+    border:1px solid  #0040c9;
     box-shadow: 0 2px 2px rgba(0,0,0,0.2);
     overflow: hidden;
     margin: 20px;
@@ -530,7 +526,7 @@
     box-sizing: border-box;
     font-size: 17px;
     border-radius: 8px;
-    border:1px solid  #9ec0ee;
+    border:1px solid  #17498b;
   }
   #total{
     border: 0; 
@@ -598,24 +594,20 @@
   color: #878787;
   }
   .copyright-text p a{
-  color: #b91b50;
+  color: #2c41ff;
   text-decoration: none;
-  box-shadow: #000000;
-  
   }
   .footer-menu li {
   display: inline-block;
   margin-left: 20px;
   }
   .footer-menu li:hover a{
-  color: #b2c2f7;
+  color: #143ab6;
   }
   .footer-menu li a {
   font-size: 14px;
-  color: #b91b50;
+  color: #878787;
   text-decoration: none;
-  box-shadow: #000000;
- 
   }
   .row-footer {
     display: -ms-flexbox;
@@ -744,104 +736,3 @@
     }    
   
   }
-    </style>
-  </head>
-  <body> 
-    <header>
-      <div class="menu logo-nav">
-        <a href="/views" class="logo">Skinfoodie</a>
-        <label class="menu-icon"><span class="fas fa-bars icomin"></span></label>
-        <nav class="navigation">
-          <ul>
-            <li><a href="/login">Administrar</a></li>
-          </ul>
-        </nav>
-      </div>
-    </header>
-
-
-<main> 
-  <div class="contenedor">
-    <a href="/listado" class="button"> Ver en lista</a> 
-  </div>
-   
-
-        <div class="modal" id="modal">
-          <div class="modal-content">
-            <img src="" alt="" class="modal-img" id="modal-img">
-          </div>
-          <div class="modal-boton" id="modal-boton">X</div>
-        </div>
-
-        <div class="container-productos" id="lista-productos">
-
-          <% producto.forEach(product => { %>
-            <tr>
-              <div class="card">
-              
-              <h2><a href="/producto/<%=product.id%>"><%= product.name %></a></h2>
-             
-              <p>Modelo: <small class="precio"><%= product.model %></small></p>
-              <p>Precio: USD.<small class="precio"><%= product.price %></small></p>
-              <p>Potencia: <small class="precio"><%= product.power %></small></p><br>
-            <% imagen.forEach(foto => { %>
-            <% if(product.id == foto.producto_id) { %>
-              <div class="contenedor-imagen">
-                <img src="<%=foto.url%>">
-            </div>
-            <% } else { %>
-               <p></p>
-            <% }%>
-            <% }); %>
-
-
-
-
-            </div>
-            <% }); %></td>
-      
-
-
-
-
-
-
-
-
-
-
-
-
-       
-      </div>
-</main>
-
-
-<footer class="footer-section">
-<div class="copyright-area">
-    <div class="container-footer">
-        <div class="row-footer">
-            <div class="col-xl-6 col-lg-6 text-center text-lg-left">
-                <div class="copyright-text">
-                    <p>Copyright &copy; 2023, todos los derechos reservados <a href="/views">Skinfoodie</a></p>
-                </div>
-            </div>
-            <div class="col-xl-6 col-lg-6 d-none d-lg-block text-right">
-                <div class="footer-menu">
-                    <ul>
-                      <li><a href="/login">Administrar</a></li>
-                      <li><a href="/nosotros">Nosotros</a></li>
-                      <li><a href="/sesion"> Iniciar sesion</a></li>
-                      <li><a href="/client">Registrarse</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-</footer> 
-
-
- 
-</body>
-</html>
