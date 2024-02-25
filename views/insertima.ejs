@@ -8,10 +8,15 @@
     <link rel="stylesheet" href="../stylesheets/style.css">
 </head>
 <body>
-    <form action="/insertcat" method="post">
-        <label for="name">Nombre de la categoría</label>
-        <input type="text" name="name" value="" placeholder="Nombre de la categoría" required>
-        <input type="submit" value="Insertar" href="/tabcategory">
+    <form action="/insertima" method="post">
+        <h2>Agregar Imagen</h2>
+        <label for="url">url:</label>
+        <input type="text" name="url" required >
+        <label for="producto">inserte id del producto:</label>
+        <input type="text" name="producto_id" required>
+        <label for="destacado">destacado:</label>
+        <input type="text" name="destacado" required>
+        <input type="submit" value="Insertar" href="/tabimagen">
     
     </form>
     

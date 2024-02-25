@@ -23,46 +23,49 @@
       </div>
     </header>
 
-    <div class="container-contacto">
-  
 
-        <form action="/compra" id="form" method="post">
-          <h2>Compra</h2>
-          <br>
-      
-          <label for="producto">Seleccione el producto</label>
-          <br>
-          <select id="categoria" name="producto_id" required>
-            <% producto.forEach(producto => { %>
-              <option value="<%= producto.id %>"><%= producto.name %> <%= producto.price %></option>
-            <% }) %>
-          </select>
-      
-          <br>
-      <br>
-          <label for="client">Seleccione el cliente</label>
-          <br>
-          <select id="categoria" name="cliente_id" required>
-            <% client.forEach(client => { %>
-              <option value="<%= client.id %>"><%= client.email %></option>
-            <% }) %>
-          </select>
-      
-      
-      
-          <br>
-      
-         
-      
-      <br>
-          <label for="cantidad">Indique la cantidad</label>
-          <input type="number" placeholder="Cantidad" name="cantidad" value="" required>
-      
-          
-          <input type="submit" id="button-contacto" value="Comprar" class="button">
-        </form>
-      
+
+
+    <main>
+ 
+        <div class="container1">
+            <div class="columna3">
+              <h2>Nombre</h2><p><%= producto.name %></p><br>
+              <h2>Codigo</h2><p><%= producto.code %></p><br>
+              <h2>Descripcion</h2><p><%= producto.description %></p><br>
+              
+             
+              
+            </div>
+            <div class="columna4">
+              <h2>Cantidad</h2><p><%= producto.quantity %></p><br>
+                <h2>Precio</h2><p><%= producto.price %></p>
+                <h2>Puntuacion promedio</h2><p><%= promedio %></p>
+    
+                <% imagen.forEach(foto => { %>
+                  <% if(producto.id == foto.producto_id) { %>
+                    <div class="contenedor-imagen">
+                      <img src="https://www.cerave.es/-/media/project/loreal/brand-sites/cerave/emea/es/scx/derm-quote-images/hydrating-cleanser.png?rev=-1?w=150&hash=2860873A6FE2492A000DE0D6BB760C4F">
+                  </div>
+                  <% } else { %>
+                     <p></p>
+                  <% }%>
+                  <% }); %>
+    
+               
+    
+                
+                    <a href="/begin" class="button"> Comprar</a>
+               
+            </div>
         </div>
+        
+             
+            
+    </main>
+   
+
+
 
 
   <footer class="footer-section">

@@ -1,5 +1,4 @@
 var express = require('express');
-const request = require ('request');
 var router = express.Router();
 const db = require('../db/models');
 require('dotenv').config()
@@ -9,6 +8,8 @@ const { v4: uuidv4 } = require('uuid');
 const jwt = require('jsonwebtoken');
 const cards = require('../config/cards');
 const database = require('../config/database');
+const request = require ('request');
+const nodemailer = require('nodemailer');
 
 const authenticateToken = (req, res, next) => {
   const authHeader = req.headers['authorization'];
@@ -22,27 +23,112 @@ const authenticateToken = (req, res, next) => {
   });
 };
 
+router.get('/sesion', (req, res) => {
+  res.render('sesion')
+} )
 
-// Vista principal
+router.post('/sesion', (req, res) => {
+  const email = req.body.email; 
+  const pass = req.body.pass;
+  const bd = require('../db/connection');
+  bd.get('SELECT * FROM client WHERE email = ? AND pass = ?', [email, pass], (err, row) => {
+    if (err) {
+      console.error(err);
+      // Manejar el error
+    } else {
+      if (row) {
+        // Los datos son iguales, redirigir a otra vista
+        res.redirect('/puntaje');
+      } else {
+        // Los datos no son iguales, manejar según sea necesario
+        res.redirect('/client');
+      }
+    }
+  });
+});
+
+
+router.get('/puntaje', (req, res)=>{
+  db.getproducto()
+  .then(data => {        
+    console.log(data)
+    res.render('puntaje', { producto: data });
+})
+.catch(err => {
+    res.render('puntaje', { producto: [] });
+})
+})
+
+router.post('/puntaje', (req, res) => {
+  const {producto_id, puntos} = req.body;
+  if (puntos >= 6 || puntos <= 0) {
+    db.getproducto()
+    .then(data => {        
+      console.log(data)
+      res.render('puntaje', { producto: data });
+  })
+  .catch(err => {
+      res.render('puntaje', { producto: [] });
+  })
+  } else {
+    db.insertpuntaje(puntos, producto_id)
+    .then(() => {
+       res.redirect('puntuado')
+    })
+    .catch(err => {
+      console.log(err);
+    })
+  }
+});
+
+router.get('/puntuado', (req, res) => {
+ 
+  res.render('puntuado')
+
+})
+
+
+
+
+
 router.get('/', (req, res) => {
-  res.render('views')
+  res.render('vista1')
 } )
 
-router.get('/views', (req, res) => {
-  res.render('views') 
-} )
-
-
-// nosotros
 router.get('/nosotros', (req, res) => {
   res.render('nosotros')
 } )
 
+router.get('/login', (req, res) => {
+  res.render('login')
+} )
 
-// registro para clientes
 router.get('/client', (req, res) => {
   res.render('client')
 } )
+
+router.get('/tabclient', (req, res) => {
+  db.getclient()
+    .then(data => {        
+      console.log(data)
+      res.render('tabclient', { client: data });
+  })
+  .catch(err => {
+      res.render('tabclient', { client: [] });
+  })
+
+});
+
+router.get('/tabcompra', (req, res) => {
+  db.getcompra()
+    .then(data => {        
+      console.log(data)
+      res.render('tabcompra', { compra: data });
+  })
+  .catch(err => {
+      res.render('tabcompra', { compra: [] });
+  })
+});
 
 router.post('/client', (req, res) => {
 
@@ -57,21 +143,42 @@ router.post('/client', (req, res) => {
   .catch(err => {
     console.log(err);
   })
+
+  const transporter = nodemailer.createTransport({
+    host: process.env.hostemail,
+    port: 465,
+    secure: true,
+    auth: {
+        user: process.env.useremail,
+        pass: process.env.passemail
+    }
+  });
+
+  const mailOptions = {
+    from: process.env.useremail,
+    //Lista de correos 
+    to: [email],
+    subject: 'Task 4: Additional features ',
+    text: "Bienvenido, se ha registrado exitosamente en skinfoodie.com"
+  };
+
+  transporter.sendMail(mailOptions, function(error, info){
+    if (error) {
+        console.log(error);
+    } else {
+        console.log('Correo electrónico enviado: ' + info.response);
+    }});
+
+
 });
 
 
-// login para clientes
-router.get('/sesion', (req, res) => {
-  res.render('sesion')
+
+router.get('/begin', (req, res) => {
+  res.render('begin')
 } )
 
-
-// login para clientes 1
-router.get('/iniciar', (req, res) => {
-  res.render('iniciar')
-} )
-
-router.post('/iniciar', (req, res) => {
+router.post('/begin', (req, res) => {
   const email = req.body.email; 
   const pass = req.body.pass;
   const bd = require('../db/connection');
@@ -91,174 +198,6 @@ router.post('/iniciar', (req, res) => {
   });
 });
 
-  
-// destacados
-router.get('/destacados', (req, res) => {
-  db.getproducto()  
-    .then(data => {   
-      db.getimagen()
-      .then (images => { 
-        res.render ('destacados', { producto: data, imagen: images });
-      })
-      .catch (err => {
-        res.render ('destacados', { producto: data, imagen: [] });
-      })
-    })     
-    .catch (err => {
-      res.render ('destacados', { producto: [], imagen: [] });
-    }); 
-})
-
-
-// listado
-router.get('/listado', (req, res) => {
-  db.getproducto()  
-    .then(data => {   
-      db.getimagen()
-      .then (images => { 
-        res.render ('listado', { producto: data, imagen: images });
-      })
-      .catch (err => {
-        res.render ('listado', { producto: data, imagen: [] });
-      })
-    })     
-    .catch (err => {
-      res.render ('listado', { producto: [], imagen: [] });
-    });
-})
-
-
-// filtro
-router.get('/filtro', (req, res) => {
-  res.render('filtro')
-} )
-
-
-// por_nombre 
-router.get('/por_nombre', (req, res) => {
-  db.getproductoNO()  
-    .then(data => {   
-      db.getimagen()
-      .then (images => { 
-        res.render ('listado', { producto: data, imagen: images });
-      })
-      .catch (err => {
-        res.render ('listado', { producto: data, imagen: [] });
-      })
-    })     
-    .catch (err => {
-      res.render ('listado', { producto: [], imagen: [] });
-    });
-})
-
-
-// por_descripcion
-router.get('/por_descripcion', (req, res) => {
-  db.getproductoDE()  
-    .then(data => {   
-      db.getimagen()
-      .then (images => { 
-        res.render ('listado', { producto: data, imagen: images });
-      })
-      .catch (err => {
-        res.render ('listado', { producto: data, imagen: [] });
-      })
-    })     
-    .catch (err => {
-      res.render ('listado', { producto: [], imagen: [] });
-    });
-})
-
-
-// por_categoria
-router.get('/por_categoria', (req, res) => {
-  db.getproductoDE()  
-    .then(data => {   
-      db.getimagen()
-      .then (images => { 
-        res.render ('listado', { producto: data, imagen: images });
-      })
-      .catch (err => {
-        res.render ('listado', { producto: data, imagen: [] });
-      })
-    })     
-    .catch (err => {
-      res.render ('listado', { producto: [], imagen: [] });
-    });
-})
-
-
-// por_modelo
-router.get('/por_modelo', (req, res) => {
-  db.getproductoMO()  
-    .then(data => {   
-      db.getimagen()
-      .then (images => { 
-        res.render ('listado', { producto: data, imagen: images });
-      })
-      .catch (err => {
-        res.render ('listado', { producto: data, imagen: [] });
-      })
-    })     
-    .catch (err => {
-      res.render ('listado', { producto: [], imagen: [] });
-    });
-})
-
-
-// por_potencia
-router.get('/por_potencia', (req, res) => {
-  db.getproductoPO()  
-    .then(data => {   
-      db.getimagen()
-      .then (images => { 
-        res.render ('listado', { producto: data, imagen: images });
-      })
-      .catch (err => {
-        res.render ('listado', { producto: data, imagen: [] });
-      })
-    })     
-    .catch (err => {
-      res.render ('listado', { producto: [], imagen: [] });
-    });
-})
-
-
-// imagen
-router.get('/imagen/:id', (req, res)=>{
-  const id = req.params.id
-  db.getimagenID(id)
-  .then(data =>{
-    console.log(data)
-    res.render('imagen', {imagen: data[0]})
-  })
-    .catch(err =>{
-      console.log(err);
-      res.render('imagen', {imagen: []})
-    })   
-})
-
-
-// producto
-router.get('/producto/:id', (req, res)=>{
-  const id = req.params.id
-  db.getproductoID(id)
-  .then(data =>{
-    db.getimagen()
-    .then (images => { 
-      res.render ('producto', { producto: data[0], imagen: images });
-    })
-    .catch (err => {
-      res.render ('producto', { producto: data[0], imagen: [] });
-    })
-  })     
-  .catch (err => {
-    res.render ('producto', { producto: [], imagen: [] });
-  });
-})
-
-
-// compra
 router.get('/compra', (req, res) => {
   db.getproducto()
   .then(data =>{
@@ -286,8 +225,17 @@ router.post('/compra', function(req, res, next) {
   const cantidad = req.body.cantidad
   const bd = require('../db/connection');
   let sql = `SELECT price FROM producto WHERE id = ?`;
+  let SQL = `SELECT email FROM client WHERE id = ?`;
   let precio;
- 
+ let email;
+
+ bd.get(SQL, [cliente_id], (err, row) => {
+   if (err) {
+     console.error(err.message);
+   }
+   email = row.email;
+ });
+
   bd.get(sql, [producto_id], (err, row) => {
     if (err) {
       console.error(err.message);
@@ -306,72 +254,468 @@ router.post('/compra', function(req, res, next) {
       console.log(err);
     })
 
+    const transporter = nodemailer.createTransport({
+      host: process.env.hostemail,
+      port: 465,
+      secure: true,
+      auth: {
+          user: process.env.useremail,
+          pass: process.env.passemail
+      }
+    });
+    const mailOptions = {
+      from: process.env.useremail,
+      //Lista de correos 
+      to: [email],
+      subject: 'Task 4: Additional features ',
+      text: "Felicidades, ha completado una compra exitosamente en Vitality.com"
+    };
+    transporter.sendMail(mailOptions, function(error, info){
+      if (error) {
+          console.log(error);
+      } else {
+          console.log('Correo electrónico enviado: ' + info.response);
+      }});
+
+
   });
+
+})
+
+
+
+router.get('/recuperativo', (req, res) => {
  
+  res.render('recuperativo')
+
 })
 
+router.post('/recuperativo', (req, res) => {
+  const email = req.body.email; 
+  const transporter = nodemailer.createTransport({
+    host: process.env.hostemail,
+    port: 465,
+    secure: true,
+    auth: {
+        user: process.env.useremail,
+        pass: process.env.passemail
+    }
+  });
+  const mailOptions = {
+    from: process.env.useremail,
+    //Lista de correos 
+    to: [email],
+    subject: 'Task 4: Additional features ',
+    text: "Ingrese en el siguiente link para recuperar su contraseña: https://vitality-4qk4-8bhu.onrender.com/client"
+  };
+  transporter.sendMail(mailOptions, function(error, info){
+    if (error) {
+        console.log(error);
+    } else {
+        console.log('Correo electrónico enviado: ' + info.response);
+    }});
 
-// pagar
-router.get('/payments', (req, res) => {
-  res.render('payments') 
-})
+    res.redirect('/sesion');
+});
 
 
 
 
-// login
-router.get('/login', (req, res) => {
-  res.render('login') 
-} )
 
-router.post('/login', function(req, res, next) {
+router.post('/login', (req,res) =>{
   let user = req.body.user
   let pass = req.body.pass
-  if (user == process.env.username && pass == process.env.clave)  {
-      res.render('administrar');
+  if (user == process.env.usuario && pass == process.env.contrasena) {
+    res.render('administrar')
   } else {
-    res.render('login', { error: 'Datos incorrectos' });
+   res.render('login', { error: 'Datos incorrectos' });
   }
 })
 
 
-// administrar
-router.get('/administrar', (req, res) =>{
-  res.render('administrar')
+
+router.get('/listado', (req, res) => {
+  
+  db.getproducto()  
+    .then(data => { 
+
+      db.getimagen()
+      .then (images => { 
+
+        db.getpuntaje()
+        .then (promedio => { 
+
+          res.render ('listado', { producto: data, imagen: images, promedio: promedio });
+        })
+        .catch (err => {
+          res.render ('listado', { producto: data, imagen: [], promedio: [] });
+        })
+
+      })
+      .catch (err => {
+        res.render ('listado', { producto: data, imagen: [], promedio: [] });
+      })
+
+    })    
+
+    .catch (err => {
+      res.render ('listado', { producto: [], imagen: [] });
+    });
 })
 
 
-// tabla de productos
-router.get('/index.ejs', (req, res) => {
+
+
+
+ 
+
+
+router.get('/nombre', (req, res) => {
+  db.getproductoNO()  
+  .then(data => { 
+
+    db.getimagen()
+    .then (images => { 
+
+      db.getpuntaje()
+      .then (promedio => { 
+
+        res.render ('listado', { producto: data, imagen: images, promedio: promedio });
+      })
+      .catch (err => {
+        res.render ('listado', { producto: data, imagen: [], promedio: [] });
+      })
+
+    })
+    .catch (err => {
+      res.render ('listado', { producto: data, imagen: [], promedio: [] });
+    })
+
+  })    
+
+  .catch (err => {
+    res.render ('listado', { producto: [], imagen: [] });
+  });
+})
+
+router.get('/descripcion', (req, res) => {
+  db.getproductoDE()  
+  .then(data => { 
+
+    db.getimagen()
+    .then (images => { 
+
+      db.getpuntaje()
+      .then (promedio => { 
+
+        res.render ('listado', { producto: data, imagen: images, promedio: promedio });
+      })
+      .catch (err => {
+        res.render ('listado', { producto: data, imagen: [], promedio: [] });
+      })
+
+    })
+    .catch (err => {
+      res.render ('listado', { producto: data, imagen: [], promedio: [] });
+    })
+
+  })    
+
+  .catch (err => {
+    res.render ('listado', { producto: [], imagen: [] });
+  });
+})
+
+router.get('/laboratorio', (req, res) => {
+  db.getproductoMO()  
+  .then(data => { 
+
+    db.getimagen()
+    .then (images => { 
+
+      db.getpuntaje()
+      .then (promedio => { 
+
+        res.render ('listado', { producto: data, imagen: images, promedio: promedio });
+      })
+      .catch (err => {
+        res.render ('listado', { producto: data, imagen: [], promedio: [] });
+      })
+
+    })
+    .catch (err => {
+      res.render ('listado', { producto: data, imagen: [], promedio: [] });
+    })
+
+  })    
+
+  .catch (err => {
+    res.render ('listado', { producto: [], imagen: [] });
+  });
+})
+
+router.get('/categoria', (req, res) => {
+  db.getproductoCA()  
+  .then(data => { 
+
+    db.getimagen()
+    .then (images => { 
+
+      db.getpuntaje()
+      .then (promedio => { 
+
+        res.render ('listado', { producto: data, imagen: images, promedio: promedio });
+      })
+      .catch (err => {
+        res.render ('listado', { producto: data, imagen: [], promedio: [] });
+      })
+
+    })
+    .catch (err => {
+      res.render ('listado', { producto: data, imagen: [], promedio: [] });
+    })
+
+  })    
+
+  .catch (err => {
+    res.render ('listado', { producto: [], imagen: [] });
+  });
+})
+
+
+
+router.get('/cantidad', (req, res) => {
+  db.getproductoPO()  
+  .then(data => { 
+
+    db.getimagen()
+    .then (images => { 
+
+      db.getpuntaje()
+      .then (promedio => { 
+
+        res.render ('listado', { producto: data, imagen: images, promedio: promedio });
+      })
+      .catch (err => {
+        res.render ('listado', { producto: data, imagen: [], promedio: [] });
+      })
+
+    })
+    .catch (err => {
+      res.render ('listado', { producto: data, imagen: [], promedio: [] });
+    })
+
+  })    
+
+  .catch (err => {
+    res.render ('listado', { producto: [], imagen: [] });
+  });
+})
+
+router.get('/promedio', (req, res) => {
+  db.getproductoPU()  
+  .then(data => { 
+
+    db.getimagen()
+    .then (images => { 
+
+      db.getpuntaje()
+      .then (promedio => { 
+
+        res.render ('listado', { producto: data, imagen: images, promedio: promedio });
+      })
+      .catch (err => {
+        res.render ('listado', { producto: data, imagen: [], promedio: [] });
+      })
+
+    })
+    .catch (err => {
+      res.render ('listado', { producto: data, imagen: [], promedio: [] });
+    })
+
+  })    
+
+  .catch (err => {
+    res.render ('listado', { producto: [], imagen: [] });
+  });
+})
+
+
+
+router.get('/cuadricula', (req, res) => {
+  db.getproducto()  
+    .then(data => {   
+      db.getimagen()
+      .then (images => { 
+        res.render ('cuadricula', { producto: data, imagen: images });
+      })
+      .catch (err => {
+        res.render ('cuadricula', { producto: data, imagen: [] });
+      })
+    })     
+    .catch (err => {
+      res.render ('cuadricula', { producto: [], imagen: [] });
+    }); 
+})
+
+
+
+router.get('/producto/:id', (req, res)=>{
+  const id = req.params.id
+  const producto_id = id
+  const bd = require('../db/connection');
+  let promedio
+
+  bd.get('SELECT SUM(puntos) AS total, COUNT(puntos) AS num_elementos FROM calificacion WHERE producto_id = ?', [id], (err, row) => {
+    if (err) {
+      console.error(err.message);
+    }
+    
+    const total = row.total;
+    const num_elementos = row.num_elementos;
+    
+    promedio = total / num_elementos;
+    
+    // Guardar el promedio en otra tabla
+    bd.run('INSERT OR REPLACE INTO puntaje (id, promedio, producto_id) VALUES (?, ?, ?)', [id, promedio, producto_id], (err) => {
+      if (err) {
+        console.error(err.message);
+      }
+      console.log('Promedio guardado en otra_tabla');
+    });
+  });
+
+  db.getproductoID(id)
+  .then(data =>{
+    db.getimagen()
+    .then (images => { 
+      res.render ('producto', { producto: data[0], imagen: images, promedio: promedio });
+    })
+    .catch (err => {
+      res.render ('producto', { producto: data[0], imagen: [], promedio: promedio });
+    })
+  })     
+  .catch (err => {
+    res.render ('producto', { producto: [], imagen: [], promedio: promedio });
+  });
+})
+
+
+
+
+
+
+
+router.get('/filtrado', (req, res) => {
+  res.render('filtrado')
+} )
+
+router.get('/compra', (req, res) => {
+  res.render('compra') 
+} )
+
+
+
+
+
+
+
+
+
+
+//productos
+router.get('/productos.ejs', (req, res) => {
   db.getproducto()
     .then(data => {        
       console.log(data)
-      res.render('index.ejs', { producto: data });
+      res.render('productos.ejs', { producto: data });
   })
   .catch(err => {
-      res.render('index.ejs', { producto: [] });
+      res.render('productos.ejs', { producto: [] });
   })
+
+  
+
 });
 
 
-// insertar producto
-router.get('/insert', (req, res) => {
+
+router.get('/categorias', (req, res) => {
+  db.getcategory()
+    .then(data => {        
+      console.log(data)
+      res.render('categorias', { category: data });
+  })
+  .catch(err => {
+      res.render('categorias', { category: [] });
+  })
+
+});
+
+router.get('/imagenes', (req, res) => {
+  db.getimagen()
+    .then(data => {        
+      console.log(data)
+      res.render('imagenes', { imagen: data });
+  })
+  .catch(err => {
+      res.render('imagenes', { imagen: [] });
+  })
+
+});
+
+
+router.get('/insertcat', (req, res) => {
+  res.render('insertcat')
+} )
+
+router.get('/insertima', (req, res) => {
+  res.render('insertima')
+} )
+
+//insertar producto
+router.get('/insert_producto', (req, res) => {
   db.getcategory()
   .then(data => {
     console.log (data)
-    res.render('insert', {category: data});
+    res.render('insert_producto', {category: data});
   })
   .catch(err => {
-    res.render('insert', {category: []});
+    res.render('insert_producto', {category: []});
   })
 });
 
-router.post('/insert', (req, res) => {
-  const {code, name, power, model, description, price, category_id} = req.body;
-  console.log(code, name, power, model, description, price, category_id);
-  db.insertproducto(code, name,power,model,description,price,category_id)
+
+router.post('/insert_producto', (req, res) => {
+  const {code, name, lab, quantity, description, price, category_id} = req.body;
+  console.log(code, name, lab, quantity, description, price, category_id);
+  db.insertproducto(code, name,lab,quantity,description,price,category_id)
   .then(() => {
-     res.redirect('index.ejs')
+     res.redirect('productos.ejs')
+  })
+  .catch(err => {
+    console.log(err);
+  })
+});
+
+router.post('/insertcat', (req, res) => {
+  const {name} = req.body;
+  console.log(name);
+  db.insertcategory(name)
+  .then(() => {
+     res.redirect('categorias')
+  })
+  .catch(err => {
+    console.log(err);
+  })
+});
+
+router.post('/insertima', (req, res) => {
+  const {url, producto_id, destacado} = req.body;
+  console.log(url, producto_id, destacado);
+  db.insertimagen(url, producto_id, destacado)
+  .then(() => {
+     res.redirect('imagenes')
   })
   .catch(err => {
     console.log(err);
@@ -379,25 +723,25 @@ router.post('/insert', (req, res) => {
 });
 
 
-// editar producto
-router.get('/edit/:id', (req, res)=>{
-  const id = req.params.id
-  db.getproductoID(id)
-  .then(data =>{
-    console.log(data)
-    res.render('edit', {producto: data[0]})
-  })
-    .catch(err =>{
-      console.log(err);
-      res.render('edit', {producto: []})
-    })   
-})
 
-router.post('/edit/', (req, res)=>{
-  const {id, code, name, power, model, description, price, category_id,} = req.body;
-  db.updateproducto(id, code, name, power, model, description, price, category_id)
+//editar producto
+router.post('/edit_producto/', (req, res)=>{
+  const {id, code, name, lab, quantity, description, price, category_id,} = req.body;
+  db.updateproducto(id, code, name, lab, quantity, description, price, category_id)
   .then(() =>{
-    res.redirect('/index.ejs');
+    res.redirect('/productos.ejs');
+  })
+  .catch(err =>{
+    console.log(err);
+
+  })
+});
+
+router.post('/editcat/', (req, res)=>{
+  const {id, name} = req.body;
+  db.updatecategory(id, name)
+  .then(() =>{
+    res.redirect('/categorias');
   })
   .catch(err =>{
     console.log(err);
@@ -406,79 +750,53 @@ router.post('/edit/', (req, res)=>{
 });
 
 
-// eliminar producto
-router.get('/delete/:id', (req, res)=>{
-  const id = req.params.id;
-  db.deleteproducto(id)
-    .then(() => {
-    res.redirect('/index.ejs');
+
+router.post('/editima/', (req, res)=>{
+  const {id, url, producto_id, destacado} = req.body;
+  db.updateimagen(id, url, producto_id, destacado)
+  .then(() =>{
+    res.redirect('/imagenes');
   })
-  .catch(err => {
-  console.log(err);
-  });
-})
-
-
-// tabla de clientes
-router.get('/tabclient', (req, res) => {
-  db.getclient()
-    .then(data => {        
-      console.log(data)
-      res.render('tabclient', { client: data });
-  })
-  .catch(err => {
-      res.render('tabclient', { client: [] });
-  })
-
-});
-
-
-// tabla de compras
-router.get('/tabcompra', (req, res) => {
-  db.getcompra()
-    .then(data => {        
-      console.log(data)
-      res.render('tabcompra', { compra: data });
-  })
-  .catch(err => {
-      res.render('tabcompra', { compra: [] });
-  })
-
-});
-
-
-// tabla de categorias
-router.get('/tabcategory', (req, res) => {
-  db.getcategory()
-    .then(data => {        
-      console.log(data)
-      res.render('tabcategory', { category: data });
-  })
-  .catch(err => {
-      res.render('tabcategory', { category: [] });
-  })
-
-});
-
-
-// insertar categoria
-router.get('/insertcat', (req, res) => {
-  res.render('insertcat')
-})
-
-router.post('/insertcat', (req, res) => {
-  const {name} = req.body;
-  console.log(name);
-  db.insertcategory(name)
-  .then(() => {
-     res.redirect('tabcategory')
-  })
-  .catch(err => {
+  .catch(err =>{
     console.log(err);
+
   })
 });
 
-// editar categoria
+
+
+router.get('/edit_producto/:id', (req, res)=>{
+  const id = req.params.id
+  db.getproductoID(id)
+  .then(data =>{
+    console.log(data)
+    res.render('edit_producto', {producto: data[0]})
+  })
+    .catch(err =>{
+      console.log(err);
+      res.render('edit_producto', {producto: []})
+    }) 
+
+
+    
+})
+
+router.get('/editima/:id', (req, res)=>{
+  const id = req.params.id
+  db.getimagenID(id)
+  .then(data =>{
+    console.log(data)
+    res.render('editima', {imagen: data[0]})
+  })
+    .catch(err =>{
+      console.log(err);
+      res.render('editima', {imagen: []})
+    }) 
+
+
+    
+})
+
 router.get('/editcat/:id', (req, res)=>{
   const id = req.params.id
   db.getcategoryID(id)
@@ -492,100 +810,49 @@ router.get('/editcat/:id', (req, res)=>{
     }) 
 })
 
-router.post('/editcat/', (req, res)=>{
-  const {id, name} = req.body;
-  db.updatecategory(id, name)
-  .then(() =>{
-    res.redirect('/tabcategory');
+router.get('/delete/:id', (req, res)=>{
+  const id = req.params.id;
+  db.deleteproducto(id)
+    .then(() => {
+    res.redirect('/productos.ejs');
   })
-  .catch(err =>{
-    console.log(err);
+  .catch(err => {
+  console.log(err);
+  });
+})
 
-  })
-});
+router.get('/administrar', (req, res) =>{
+  res.render('administrar')
+})
 
+router.get('/categorias', (req, res) =>{
+  res.render('categorias')
+})
 
-// eliminar categoria
 router.get('/deletecat/:id', (req, res)=>{
   const id = req.params.id;
   db.deletecategory(id)
     .then(() => {
-    res.redirect('/tabcategory');
+    res.redirect('/categorias');
   })
   .catch(err => {
   console.log(err);
   });
 })
 
-
-// tabla de imagenes
-router.get('/tabimagen', (req, res) => {
-  db.getimagen()
-    .then(data => {        
-      console.log(data)
-      res.render('tabimagen', { imagen: data });
-  })
-  .catch(err => {
-      res.render('tabimagen', { imagen: [] });
-  })
-});
-
-
-// insertar imagen
-router.get('/insertima', (req, res) => {
-  res.render('insertima')
-})
-
-router.post('/insertima', (req, res) => {
-  const {url, producto_id, destacado} = req.body;
-  console.log(url, producto_id, destacado);
-  db.insertimagen(url, producto_id, destacado)
-  .then(() => {
-     res.redirect('tabimagen')
-  })
-  .catch(err => {
-    console.log(err);
-  })
-});
-
-
-//editar imagen
-router.get('/editima/:id', (req, res)=>{
-  const id = req.params.id
-  db.getimagenID(id)
-  .then(data =>{
-    console.log(data)
-    res.render('editima', {imagen: data[0]})
-  })
-    .catch(err =>{
-      console.log(err);
-      res.render('editima', {imagen: []})
-    })  
-})
-
-router.post('/editima/', (req, res)=>{
-  const {id, url, producto_id, destacado} = req.body;
-  db.updateimagen(id, url, producto_id, destacado)
-  .then(() =>{
-    res.redirect('/tabimagen');
-  })
-  .catch(err =>{
-    console.log(err);
-
-  })
-});
-
-
-// eliminar imagen
 router.get('/deleteima/:id', (req, res)=>{
   const id = req.params.id;
   db.deleteimagen(id)
     .then(() => {
-    res.redirect('/tabimagen');
+    res.redirect('/imagenes');
   })
   .catch(err => {
   console.log(err);
   });
+})
+
+router.get('/payments', (req, res) => {
+  res.render('payments') 
 })
 
 router.post('/',
@@ -686,6 +953,7 @@ router.get('/:id', async function (req, res) {
       data: transaction,
   });
 });
+
 
 
 
