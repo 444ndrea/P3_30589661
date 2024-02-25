@@ -8,19 +8,27 @@
     <link rel="stylesheet" href="../stylesheets/style.css">
 </head>
 <body>
-    <form action="/insert" method="post">
+    <form action="/insert_producto" method="post">
         <label for="code">Código</label>
         <input type="number" name="code" value="" placeholder="Código del producto" required>
         <label for="name">Nombre del Producto</label>
         <input type="text" name="name" value="" placeholder="Nombre del Producto" required>
-        <label for="brand">Marca</label>
-        <input type="text" name="brand" value="" placeholder="Marca del Producto" required>
+        <label for="lab">Laboratorio</label>
+        <input type="text" name="lab" value="" placeholder="Laboratorio del Producto" required>
+        <label for="quantity">Cantidad</label>
+        <input type="number" name="quantity" value="" placeholder="Cantidad del Producto" required>
         <label for="description">Descripción</label>
         <textarea type="text" name="description" value="" placeholder="Descripción del producto" required></textarea>
         <label for="price">Precio</label>
         <input type="text" name="price" value="" placeholder="Precio del Producto" required>
-        </select>
-        <input type="submit" value="Insertar" href="/index.ejs">
+        <label for="category_id">Categoría</label>
+    
+        <select id="categoria" name="category_id" required>
+            <% category.forEach(category => { %>
+              <option value="<%= category.id %>"><%= category.name %></option>
+            <% }) %>
+          </select>
+        <input type="submit" value="Insertar" href="/productos.ejs">
     
     </form>
     

@@ -3,76 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login</title> 
-  <style>
-		@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
-     
-body{
-	background-image:url(https://www.cerave.hk/en-hk/-/media/Project/Loreal/BrandSites/CeraVe/shared/Cerave_Banner_1.png?h=350&la=en-HK&w=675&hash=0E9B05A5F54AA46A99EE1A4930A5746328A7FE2C);
-	background-size:cover;
-	background-attachment: fixed;
-}
-#login{
-	display:flex;
-	flex-direction:column;
-	justify-content: center;
-	align-items:center;
-	background:rgba(235, 33, 134, 0.507);
-	width:60%;
-	height:70vh;
-	margin:50px auto;
-	border-radius:10px 10px 10px 10px;
-}
-label{
-    text-align: center;
-	font-family: 'Poppins', sans-serif;
-	font-size: 30px;
-	color:rgba(1, 0, 2, 0.87);
-}
-h1{
-	text-align:center;
-	font-family: 'Poppins', sans-serif;
-	color: rgb(0, 0, 0);
-}
-form{
-	display:flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-}
-input{
-padding:10px;
-border-radius: 16px;
-font-family: 'Poppins', sans-serif;
-}
-#iniciar{
-	margin-top:10px;
-	padding: 70px;
-	border-radius:10px 10px 10px 10px;
-	font-family: 'Poppins', sans-serif;
-}
-button { 
-	cursor: pointer;
-	font-family: 'Poppins', sans-serif;
-	margin: 5;
-    padding: 8px 15px;
-    border-radius: 16px; 
-	background: #f52776
-}
-  </style>
+  <link rel="stylesheet" href="../stylesheets/login.css">
+  <title>Login</title>
 </head>
 <body>
-  <table>
-    <h1 class="login">Inicio de Sesión de Administrador</h1>
-    <div id="login">
-    <form action="/login" method="post">
-    <label for="username">Usuario</label>
+  
+  <div class="background">
+      <div class="shape"></div>
+      <div class="shape"></div>
+  </div>
+
+  <form action="/login" method="post">
+    <h3>Inicio</h3>
+    <label for="username">Nombre de Usuario</label>
     <input type="text" placeholder="Usuario" name="user" value="" required>
     <label for="password" required>Contraseña</label>
     <input type="password" placeholder="Contraseña" name="pass" value="" required>
     <button type="submit" value="Login" required>Iniciar Sesión</button>
   </form>
-  </div>
-</table>
+
 </body>
 </html>

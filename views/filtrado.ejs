@@ -23,49 +23,26 @@
       </div>
     </header>
 
-    <div class="container-contacto">
-  
 
-        <form action="/compra" id="form" method="post">
-          <h2>Compra</h2>
-          <br>
-      
-          <label for="producto">Seleccione el producto</label>
-          <br>
-          <select id="categoria" name="producto_id" required>
-            <% producto.forEach(producto => { %>
-              <option value="<%= producto.id %>"><%= producto.name %> <%= producto.price %></option>
-            <% }) %>
-          </select>
-      
-          <br>
-      <br>
-          <label for="client">Seleccione el cliente</label>
-          <br>
-          <select id="categoria" name="cliente_id" required>
-            <% client.forEach(client => { %>
-              <option value="<%= client.id %>"><%= client.email %></option>
-            <% }) %>
-          </select>
-      
-      
-      
-          <br>
-      
-         
-      
-      <br>
-          <label for="cantidad">Indique la cantidad</label>
-          <input type="number" placeholder="Cantidad" name="cantidad" value="" required>
-      
-          
-          <input type="submit" id="button-contacto" value="Comprar" class="button">
-        </form>
-      
+
+
+
+    <main>
+        <div class="contenedor">
+          <br><br>
+          <a href="/nombre" class="button"> Filtrar por nombre</a> <br><br><br><br>
+          <a href="/descripcion" class="button"> Filtrar por descripcion</a><br><br><br><br>
+          <a href="/categoria" class="button"> Filtrar por categoria</a><br><br><br><br>
+          <a href="/cantidad" class="button"> Filtrar por cantidad</a><br><br><br><br>
+          <a href="/promedio" class="button"> Filtrar por puntaje</a><br><br><br><br>
         </div>
+      </main>
 
 
-  <footer class="footer-section">
+
+
+
+  <footer class="footer-section1">
     <div class="copyright-area">
         <div class="container-footer">
             <div class="row-footer">

@@ -1,12 +1,6 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Productos</title>
-    <style>
-      @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
-        *{
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+
+*{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -15,96 +9,95 @@
     line-height: 1.3;
   }
   
- .contenedor-imagen {   
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 30vh; 
- }
- .contenedor-imagen img{  
-  max-width: 100%;
-  max-height: 100%;
- }
 
- .contenedor-imagen1 {   
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 10vh; 
- }
- .contenedor-imagen1 img{  
-  max-width: 100%;
-  max-height: 100%;
- }
+  .contenedor-imagen {   
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30vh; 
+   }
+   .contenedor-imagen img{  
+    max-width: 100%;
+    max-height: 100%;
+   }
   
- 
-  .content-table { 
-    width: 100%;
-    height: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 20px;
-  margin-bottom: 100px;
-    border-collapse: collapse; 
-    font-size: 1em; 
-    font-family: 'Poppins', sans-serif; 
-    min-width: 600px; 
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15); 
-  }
-
-  .content-table thead tr { 
-    background-color: #99c9ff; 
-    color: #ffffff; 
-    text-align: middle; 
-  }
-
-  .content-table th, .content-table td { 
-    padding: 12px 15px; text-align: center;
-  }
-
-  .content-table tbody tr { 
-    border-bottom: 1px solid #dddddd; text-align: center;
-  } 
-  .content-table tbody tr:nth-of-type(even) { 
-    background-color: #f3f3f3; text-align: center;
-  } 
-  .content-table tbody tr:last-of-type { 
-    border-bottom: 2px solid #980065; 
-  }
+   .contenedor-imagen1 {   
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10vh; 
+   }
+   .contenedor-imagen1 img{  
+    max-width: 100%;
+    max-height: 100%;
+   }
+    
+   
+    .content-table { 
+      width: 100%;
+      height: 100%;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 20px;
+    margin-bottom: 100px;
+      border-collapse: collapse; 
+      font-size: 1em; 
+      font-family: 'Poppins', sans-serif;
+      min-width: 600px; 
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.15); 
+    }
+  
+    .content-table thead tr { 
+      background-color: #f52776;
+      color: #ffffff; 
+      text-align: middle; 
+    }
+  
+    .content-table th, .content-table td { 
+      padding: 12px 15px; text-align: center;
+    }
+  
+    .content-table tbody tr { 
+      border-bottom: 1px solid #dddddd; text-align: center;
+    } 
+    .content-table tbody tr:nth-of-type(even) { 
+      background-color: #f3f3f3; text-align: center;
+    } 
+    .content-table tbody tr:last-of-type { 
+      border-bottom: 2px solid #c24e7b;; 
+    }
 
   p{
     padding: 5px;
   }
   
+
+
   img{
     border-radius: 4px;
   }
   
-  .contenedor {
-    text-align: center;
-  }
-
   .button{
-    background:#ff57ab;
+    background:#f52776;;
     text-decoration: none;
     padding: 15px;
     margin-top: 15px;
     border-radius: 5px;
-    color:  #f2f2f2;
+    color:  #ffffff;
     font-weight: 700;
   }
   .button:hover{
     cursor: pointer;
     text-decoration: none;
-    background-color: #ff57ab;
-    color: #000000;
+    background-color: #f51f66;
+    color: #a0a0a0;
   }
   
   
   /*menu*/
   header{
-    background:#ff57ab;
-    color:#000000;
+    background: #f52776;
+    color:#ffffff;
     padding: 1rem 0;
     position: fixed;
     left: 0;
@@ -113,7 +106,7 @@
     height: 65px;
   }
   header a{
-    color: #050202;
+    color: #ffffff;
     text-decoration: none;
   }
   .menu{
@@ -128,7 +121,7 @@
     flex-wrap: wrap;
   }
   .logo{
-    color: #0c0606;
+    color: #ffffff;
     font-size: 30px;
     font-weight: 700;
   }
@@ -149,7 +142,7 @@
     font-weight: 700;
   }
   .navigation ul li a:hover{
-    color: #080606;
+    color: #8f8f8f;
   }
   .navigation ul .search-icon input{
     color: #000;
@@ -161,23 +154,23 @@
   }
   .navigation ul .search-icon .icon span{
     font-size: 18px;
-    color: #cccccc;
+    color: #a0a0a0;
   }
   .navigation ul .search-icon .icon span:hover{
-    color: #f2f2f2;
+    color: #838383;
   }
   .icomin{
-    color: #cccccc;
+    color: #818181;
   }
   .icomin:hover{
-    color: #f2f2f2;
+    color: #888888;
   }
   .bi-cart3{
-    color: #cccccc;
+    color: #999999;
     cursor: pointer;
   }
   .bi-cart3:hover{
-    color: #f2f2f2;
+    color: #888888;
   }
   .car{
     position: relative;
@@ -194,10 +187,10 @@
     padding: .5rem 0;
     margin: .125rem 0 0;
     font-size: 1rem;
-    color: #e8f4ff;
+    color: #212927;
     text-align: left;
     list-style: none;
-    background-color: #fff;
+    background-color: #747474;
     background-clip: padding-box;
     border: 1px solid rgba(0,0,0,.15);
     border-radius: .25rem;
@@ -212,33 +205,32 @@
     display: block;
   }
   .button-vaciar{
-    background:#da0f85;
+    background:#f52776;;
     text-decoration: none;
     padding: 15px;
     margin-top: 15px;
     border-radius: 5px;
-    color:  #f2f2f2;
+    color:  #818181;
     font-weight: 700;
   }
   .button-vaciar:hover{
     cursor: pointer;
     text-decoration: none;
-    background-color: #c4e5eb;
-    color: #f2f2f2;
+    background-color: #f51f66;
+    color: #868686;
   }
   .button-pedido{
-    background:rgb(197, 172, 255) ;
-    text-decoration: none ;
+    background:#f52776;
+    text-decoration: none;
     padding: 15px;
     margin-top: 15px;
     border-radius: 5px;
-    color:  #f2f2f2;
     font-weight: 700;
   }
   .button-pedido:hover{
     cursor: pointer;
     text-decoration: none;
-    background-color: #9b277e;
+    background-color: #f51f66;
     color: #f2f2f2;
   }
   
@@ -301,8 +293,8 @@
   }
   .circulo{    
     width: 60%;
-    border-radius: 50%;
-    border:2px solid  #dd0c7f;
+    border-radius: 40%;
+    border:4px solid  #f52776;
     box-shadow: 0 2px 2px rgba(0,0,0,0.2);
   }
   .ver-todo{
@@ -391,7 +383,7 @@
     width: 50px;
     height: 50px;
     line-height: 50px;
-    background:#242b3b;
+    background:#f52776;
     font-size: 2em;
     text-align: center;
     border-radius: 50%;
@@ -415,10 +407,10 @@
   .container-productos .card{
     width: 260px;
     height: 390px;
-    background: #4E5D6C;
+    background: #df99b4;;
     color:#f2f2f2;
     border-radius: 8px;
-    border:1px solid  #c1d1f5;
+    border:1px solid  #f52776;
     box-shadow: 0 2px 2px rgba(0,0,0,0.2);
     overflow: hidden;
     margin: 20px;
@@ -449,7 +441,16 @@
     margin: 0 auto;
   }
   
-  
+  .contenedor {
+    text-align: center;
+  }
+
+  .footer-section1{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+  }
+
   /*contenido*/
   .container{
     width: 100%;
@@ -460,7 +461,7 @@
     justify-content: center;
     margin: 10% auto;
   }
-
+  
   .container1{
     width: 100%;
     max-width: 1000px;
@@ -484,8 +485,6 @@
     padding-right: 25px;
     text-align: center;
   }
-
-
 
 
   /*columnas*/
@@ -530,7 +529,7 @@
     box-sizing: border-box;
     font-size: 17px;
     border-radius: 8px;
-    border:1px solid  #9ec0ee;
+    border:1px solid  #f52776;
   }
   #total{
     border: 0; 
@@ -574,12 +573,6 @@
   }
   
   
-
-  .footer-section1{
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-  }
   /*footer*/
   .footer-menu ul {
     margin: 0px;
@@ -598,24 +591,20 @@
   color: #878787;
   }
   .copyright-text p a{
-  color: #b91b50;
+  color: #db6693;
   text-decoration: none;
-  box-shadow: #000000;
-  
   }
   .footer-menu li {
   display: inline-block;
   margin-left: 20px;
   }
   .footer-menu li:hover a{
-  color: #b2c2f7;
+  color: #f52776;
   }
   .footer-menu li a {
   font-size: 14px;
-  color: #b91b50;
+  color: #878787;
   text-decoration: none;
-  box-shadow: #000000;
- 
   }
   .row-footer {
     display: -ms-flexbox;
@@ -744,104 +733,3 @@
     }    
   
   }
-    </style>
-  </head>
-  <body> 
-    <header>
-      <div class="menu logo-nav">
-        <a href="/views" class="logo">Skinfoodie</a>
-        <label class="menu-icon"><span class="fas fa-bars icomin"></span></label>
-        <nav class="navigation">
-          <ul>
-            <li><a href="/login">Administrar</a></li>
-          </ul>
-        </nav>
-      </div>
-    </header>
-
-
-<main> 
-  <div class="contenedor">
-    <a href="/listado" class="button"> Ver en lista</a> 
-  </div>
-   
-
-        <div class="modal" id="modal">
-          <div class="modal-content">
-            <img src="" alt="" class="modal-img" id="modal-img">
-          </div>
-          <div class="modal-boton" id="modal-boton">X</div>
-        </div>
-
-        <div class="container-productos" id="lista-productos">
-
-          <% producto.forEach(product => { %>
-            <tr>
-              <div class="card">
-              
-              <h2><a href="/producto/<%=product.id%>"><%= product.name %></a></h2>
-             
-              <p>Modelo: <small class="precio"><%= product.model %></small></p>
-              <p>Precio: USD.<small class="precio"><%= product.price %></small></p>
-              <p>Potencia: <small class="precio"><%= product.power %></small></p><br>
-            <% imagen.forEach(foto => { %>
-            <% if(product.id == foto.producto_id) { %>
-              <div class="contenedor-imagen">
-                <img src="<%=foto.url%>">
-            </div>
-            <% } else { %>
-               <p></p>
-            <% }%>
-            <% }); %>
-
-
-
-
-            </div>
-            <% }); %></td>
-      
-
-
-
-
-
-
-
-
-
-
-
-
-       
-      </div>
-</main>
-
-
-<footer class="footer-section">
-<div class="copyright-area">
-    <div class="container-footer">
-        <div class="row-footer">
-            <div class="col-xl-6 col-lg-6 text-center text-lg-left">
-                <div class="copyright-text">
-                    <p>Copyright &copy; 2023, todos los derechos reservados <a href="/views">Skinfoodie</a></p>
-                </div>
-            </div>
-            <div class="col-xl-6 col-lg-6 d-none d-lg-block text-right">
-                <div class="footer-menu">
-                    <ul>
-                      <li><a href="/login">Administrar</a></li>
-                      <li><a href="/nosotros">Nosotros</a></li>
-                      <li><a href="/sesion"> Iniciar sesion</a></li>
-                      <li><a href="/client">Registrarse</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-</footer> 
-
-
- 
-</body>
-</html>
